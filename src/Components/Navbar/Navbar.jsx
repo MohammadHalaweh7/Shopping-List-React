@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import style from "./Navbar.module.css";
+import { CounterContext } from "../CounterContext/CounterContext";
 
 export default function Navbar() {
+  let [data, setData] = useState([]);
+  let { count } = useContext(CounterContext);
+
   return (
     <nav
       className={` navbar navbar-expand-lg bg-body-tertiary ${style.container} `}
@@ -55,9 +59,17 @@ export default function Navbar() {
           </ul>
 
           <div className={`d-flex ${style.icons}`}>
-            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <div
+              onClick={() => {
+                let localStorageString = localStorage.getItem("cart");
+                let localStorageParsed = JSON.parse(localStorageString);
+                setData(localStorageParsed);
+              }}
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
               <i class="fa-solid fa-cart-shopping"></i>
-              <div className={`${style["notification-cart"]}`}>9</div>
+              <div className={`${style["notification-cart"]}`}>{count}</div>
             </div>
 
             <div>
@@ -78,7 +90,7 @@ export default function Navbar() {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">
-                Modal title
+                Cart
               </h5>
               <button
                 type="button"
@@ -97,7 +109,25 @@ export default function Navbar() {
                     <th scope="col">Count</th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                  {data.map((ele, key) => (
+                    <tr key={key}>
+                      <td>
+                        <img
+                          width={100}
+                          height={100}
+                          src={ele.img}
+                          alt={ele.name}
+                        />
+                      </td>
+                      <td>{ele.name}</td>
+                      <td>{ele.price}</td>
+                      <td>
+                        <input defaultValue={ele.counter} type="number"></input>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </div>
             <div class="modal-footer">

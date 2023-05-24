@@ -1,10 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import style from "./Navbar.module.css";
 import { CounterContext } from "../CounterContext/CounterContext";
 
 export default function Navbar() {
-  let [data, setData] = useState([]);
-  let { count } = useContext(CounterContext);
+  const [data, setData] = useState([]);
+  const { count } = useContext(CounterContext);
+
+  useEffect(() => {
+    const localStorageString = localStorage.getItem("cart");
+    const localStorageParsed = JSON.parse(localStorageString);
+    setData(localStorageParsed);
+  }, []);
 
   return (
     <nav
@@ -61,8 +67,8 @@ export default function Navbar() {
           <div className={`d-flex ${style.icons}`}>
             <div
               onClick={() => {
-                let localStorageString = localStorage.getItem("cart");
-                let localStorageParsed = JSON.parse(localStorageString);
+                const localStorageString = localStorage.getItem("cart");
+                const localStorageParsed = JSON.parse(localStorageString);
                 setData(localStorageParsed);
               }}
               data-bs-toggle="modal"

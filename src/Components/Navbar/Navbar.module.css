@@ -1,18 +1,34 @@
 .container {
-    width: 80%;
-    margin: 0 auto;
-  }
+  width: 80%;
+  margin: 0 auto;
+}
 
-  .title {
-    font-weight: bold;
-  }
+.title {
+  font-weight: bold;
+}
 
-  .icons
-  {
-    font-size: 25px;
-    cursor: pointer;
-  }
+.icons {
+  font-size: 25px;
+  cursor: pointer;
+}
 
-  .icons > div:nth-child(1){
-    padding-right: 15px;
-  }
+.icons>div:nth-child(1) {
+  padding-right: 15px;
+}
+
+.notification-cart {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #d2a453;
+  font-size: 10px;
+  position: relative;
+  top: -38px;
+  right: -17px;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}

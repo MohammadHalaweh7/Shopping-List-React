@@ -127,6 +127,7 @@ export default function Navbar() {
                     <th scope="col">Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Count</th>
+                    <th scope="col">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -160,6 +161,21 @@ export default function Navbar() {
                           defaultValue={ele.counter}
                           type="number"
                         ></input>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => {
+                            let newData = data.filter(
+                              (element) => element.name !== ele.name
+                            );
+                            setData(newData);
+                            calculateTotalPrice(newData);
+                          }}
+                          type="button"
+                          class="btn btn-danger"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
                       </td>
                     </tr>
                   ))}

@@ -1,16 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import style from "./Navbar.module.css";
 import { CounterContext } from "../CounterContext/CounterContext";
 
 export default function Navbar() {
   const [data, setData] = useState([]);
   const { count } = useContext(CounterContext);
+  let [totalPrice, setTotalPrice] = useState(0);
 
-  useEffect(() => {
-    const localStorageString = localStorage.getItem("cart");
-    const localStorageParsed = JSON.parse(localStorageString);
-    setData(localStorageParsed);
-  }, []);
+  function calculateTotalPrice(data) {
+    let price = 0;
+    for (let i = 0; i < data.length; i++) {
+      price += data[i].counter * data[i].price;
+    }
+    setTotalPrice(price);
+  }
+
+  function addToBill(addition) {
+    totalPrice = totalPrice + addition;
+    setTotalPrice(totalPrice);
+  }
+
+  function subFromBill(addition) {
+    totalPrice = totalPrice - addition;
+    setTotalPrice(totalPrice);
+  }
 
   return (
     <nav
@@ -70,6 +83,7 @@ export default function Navbar() {
                 const localStorageString = localStorage.getItem("cart");
                 const localStorageParsed = JSON.parse(localStorageString);
                 setData(localStorageParsed);
+                calculateTotalPrice(localStorageParsed);
               }}
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
@@ -129,7 +143,23 @@ export default function Navbar() {
                       <td>{ele.name}</td>
                       <td>{ele.price}</td>
                       <td>
-                        <input defaultValue={ele.counter} type="number"></input>
+                        <input
+                          min={1}
+                          max={9}
+                          onChange={(e) => {
+                            // console.log(e)
+
+                            if (ele.counter > e.target.value) {
+                              ele.counter = e.target.value;
+                              subFromBill(ele.price);
+                            } else if (ele.counter < e.target.value) {
+                              ele.counter = e.target.value;
+                              addToBill(ele.price);
+                            }
+                          }}
+                          defaultValue={ele.counter}
+                          type="number"
+                        ></input>
                       </td>
                     </tr>
                   ))}
@@ -137,6 +167,9 @@ export default function Navbar() {
               </table>
             </div>
             <div class="modal-footer">
+              <div className="me-auto">
+                <h3>Total Price: {totalPrice}$</h3>
+              </div>
               <button
                 type="button"
                 class="btn btn-secondary"

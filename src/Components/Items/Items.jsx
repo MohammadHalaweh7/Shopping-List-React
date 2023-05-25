@@ -24,7 +24,7 @@ export default function Items() {
       <div className="row">
         {products.map((ele, key) => (
           <div className="col-md-3 d-flex flex-column align-items-center my-4">
-            <div className="card">
+            <div className={`card ${style['card']}`}>
               <img
                 className="card-img-top"
                 src={ele.img}
@@ -37,7 +37,8 @@ export default function Items() {
               </div>
 
               <button
-                class="btn btn-primary"
+              className={`${style['add-button']}`}
+                // class="btn btn-primary"
                 onClick={async (e) => {
                   setState("sent");
                   await new Promise((res, rej) => {
@@ -82,7 +83,7 @@ export default function Items() {
                 {state == "done" ? (
                   <i>Add Cart</i>
                 ) : (
-                  <div class="spinner-border text-primary" role="status"></div>
+                  <div  class="spinner-border text-primary" role="status"></div>
                 )}
               </button>
             </div>

@@ -1,0 +1,15 @@
+.add-button {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    cursor: pointer;
+}
+
+.card:hover .add-button {
+    opacity: 1;
+}
